@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <h1>
+        actividades introduccion a <strong>CSS</strong>
+    </h1>
+
+    <article class="med">
+        <h2 class="grande">Punto numero 2 y 4: Basadas en Fuentes (Tipográficas)</h2>
+        <p>Estas dependen del tamaño de la fuente configurada.</p>
+
+        <ul>
+            <li>em: Relativa al tamaño de fuente del elemento padre. Si se usa en font-size, es relativa al tamaño del propio elemento.</li>
+            <li>rem (root em): Relativa al tamaño de fuente del elemento raíz "html" que por defecto suele ser 16px. Es la más recomendada para accesibilidad.</li>
+            <li>ex / ch: Basadas en la altura de la "x" o el ancho del carácter "0" de la fuente actual.</li>
+        </ul>
+
+        <h2 class="grande">Basadas en el Viewport (Ventana del navegador)</h2>
+        <p>Se calculan según las dimensiones reales de la ventana de visualización.</p>
+
+        <ul>
+            <li>vw (viewport width): 1% del ancho de la ventana.</li>
+            <li>vh (viewport height): 1% del alto de la ventana.</li>
+            <li>vmin / vmax: El valor mínimo o máximo entre el ancho y el alto.</li>
+        </ul>
+
+        <h2 class="grande">Porcentaje (%)</h2>
+        <p>Aunque técnicamente es un factor de escala, en la práctica se trata como una medida relativa:</p>
+        <ul>
+            <li>Dependencia jerárquica: Se define siempre respecto a una medida del elemento padre</li>
+            <li>Diferencia clave: A diferencia de vw o rem, el % requiere que el ancestro tenga una dimensión definida para funcionar correctamente en muchos contextos de diseño.</li>
+        </ul>
+    </article>
+
+    <article class="mod">
+        <h2 class="grande"> punto 6: En que consiste el modelo de caja cuando utilzamos CSS:</h2>
+        <p>En CSS, el modelo de caja (Box Model) es el principio básico de diseño que establece que todo elemento HTML es, en esencia, una caja rectangular.</p>
+        <p>El modelo de caja se compone de cuatro capas concéntricas, de adentro hacia afuera:</p>
+        <ol>
+            <li>Contenido (Content): Es el corazón de la caja. Aquí es donde vive tu texto, imagen u otro contenido visual. Su tamaño se controla con width y height.</li>
+            <li>Relleno (Padding): Es el espacio transparente que hay entre el contenido y el borde. Funciona como un "colchón" interno. Si el elemento tiene un color de fondo, el padding también lo mostrará.</li>
+            <li>Borde (Border): Es la línea que rodea al padding y al contenido. Puedes hacerla visible, cambiar su grosor, estilo (sólido, punteado) y color.</li>
+            <li> Margen (Margin): Es el espacio transparente exterior al borde. Funciona como un escudo que separa tu caja de las demás cajas (otros elementos) en la página.</li>
+        </ol>
+    </article>
+    
+    <article>
+        <h2 class="grande">punto 7:Combinaciones de Selectores en CSS</h2>
+        <p>Los selectores y combinadores nos permiten apuntar a elementos muy específicos en nuestra página basándonos en su relación con otros elementos o en sus atributos:</p>
+
+        <ul>
+            <li> p + p (Hermano adyacente): Selecciona un párrafo &lt;p&gt; que esté inmediatamente después de otro párrafo &lt;p&gt;. Si hay otro elemento en medio (como un div), no lo selecciona.</li>
+            <li> div + p (Hermano adyacente): Selecciona un párrafo &lt;p&gt; que esté inmediatamente después de un &lt;div&gt;.</li>
+            <li>div > p (Hijo directo): Selecciona todos los párrafos &lt;p&gt; que sean hijos directos de un &lt;div&gt;. No seleccionará párrafos que estén más anidados (por ejemplo, dentro de una lista o un article que esté dentro de ese div).</li>
+            <li>p#azul (Selector de ID): Selecciona específicamente el párrafo &lt;p&gt; que tenga el identificador exacto >id="azul".</li>
+            <li> p ~ p (Hermanos generales): Selecciona todos los párrafos &lt;p&gt; que sean hermanos (que compartan el mismo elemento padre) y que estén después del primer párrafo &lt;p&gt;, sin importar si hay otros elementos en medio.</li>
+            <li> h2[title ~= "otro"] (Selector de atributo con palabra):Selecciona cualquier título &lt;h2&gt; que tenga un atributo title y que su valor contenga la palabra exacta "otro" separada por espacios (ejemplo: <code>title="un otro texto"</code>).</li>
+            <li> h2[lang |= "es"] (Selector de atributo con prefijo): Selecciona cualquier título &lt;h2&gt; cuyo atributo lang sea exactamente "es", o que comience con "es-" (por ejemplo, "es-MX" o "es-ES"). Es muy usado para idiomas.</li>
+            <li>Localizar elementos con el atributo "title":  Para seleccionar cualquier elemento que tenga el atributo title, sin importar lo que diga adentro, simplemente se usan los corchetes así: <strong>[title]</strong>.</li>
+        </ul>
+
+    </article>
+
+    <aside>
+        
+        <section>
+            <button class="boton">punto Numero 1: boton</button>
+        </section>
+
+        <p>punto 3: borde punteado</p>
+        <p >punto 5: <span class="azul">lorem ipsum </span></p>
+    
+    </aside> 
+    <footer>
+        <p>
+            <strong>Hecho por :</strong>
+            <span>
+                Alumno: Angel Guerrero.
+                Email de contactos: aguerrero36@ucol.mx <br>
+                Facultad: telematica. <br>
+                Materia: programacion para web <br>
+            </span>
+        </p>
+    </footer>
+
+</body>
+</html>
