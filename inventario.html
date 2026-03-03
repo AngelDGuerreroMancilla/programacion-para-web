@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Inventario</title>
+    <link rel="stylesheet" href="inventario.css">
+</head>
+<body>
+
+    <div id="notificacion"></div>
+
+    <div class="container">
+        <h2>Agregar Producto</h2>
+        <form id="form">
+            <div class="field">
+                <label>Código:</label>
+                <input type="text" id="id" >
+            </div>
+            <div class="field">
+                <label>Nombre:</label>
+                <input type="text" id="nombre" required>
+            </div>
+            <div class="field">
+                <label>Categoría:</label>
+                <input type="text" id="categoria" required>
+            </div>
+            <div class="field">
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad" >
+            </div>
+            <div class="field">
+                <label>Costo ($):</label>
+                <input type="number" id="costo" >
+            </div>
+            <button type="submit">Guardar Producto</button>
+        </form>
+    </div>
+
+
+    <script src="inventario.js"></script>
+</body>
+</html>
