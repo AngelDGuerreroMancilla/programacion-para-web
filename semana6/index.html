@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultor Climático México</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body style="background-color:rgb(237, 237, 234); display: flex; flex-direction: column; align-items: center;">
+    <h2>Consultor climático</h2 >
+    
+    <p>Estado:</p>
+    <select id="estadoSelect" class="form-select"aria-label="Disabled select example"  style="width: 50vh;"+>
+        <option value="" disabled selected>Seleccionar</option>
+        <option value="Coahuila, Mexico">Coahuila</option>
+        <option value="Colima, Mexico">Colima</option>
+        <option value="Ciudad de Mexico, Mexico">Ciudad de México</option>
+        <option value="Durango, Mexico">Durango</option>
+    </select>
+    <div class="card" style="width: 55vh;">
+        <img id="imagen" class="card-img-top" >
+        <div class="card-body">
+            <h2 id="estado" class="card-title"></h2>
+            <p id="hora" class="card-text"></p>
+            <p id="temp" class="card-text"></p>
+            <p id="velViento" class="card-text"></p>
+            <p id="humedad" class="card-text"></p>
+        <h4 id="nubes"></h4>
+    </div>
+
+    <script>
+        const estadoSelect = document.getElementById("estadoSelect");
+        const estado = document.getElementById("estado");
+        const temp = document.getElementById("temp");
+        const hora = document.getElementById("hora");
+
+        const velViento = document.getElementById("velViento");
+        const imagen = document.getElementById("imagen");
+        const humedad = document.getElementById("humedad");
+        const nubes= document.getElementById("nubes")
+        
+
+
+
+        const key = "20111eda67ed3da9fbeda8882cd72473";
+
+        async function call() {
+    
+            let peticion = encodeURIComponent(estadoSelect.value);
+            const url = `http://api.weatherstack.com/current?access_key=${key}&query=${peticion}`;
+            
+            console.log("Consultando:", url);
+
+            try {
+                let res = await fetch(url);
+                let datos = await res.json()
+                if(datos.error) {
+                    estado.innerHTML = "Error: " + datos.error.info;
+                    return;
+                }
+                imagen.setAttribute("src", datos.current.weather_icons[0])
+                estado.innerHTML = `Lugar: ${datos.location.name}`;
+                hora.innerHTML = `Hora de observación: ${datos.current.observation_time}`;
+                temp.innerHTML = `Temperatura: ${datos.current.temperature}`;
+                humedad.innerHTML=`Humedad: ${datos.current.humidity}`
+                nubes.innerHTML= `Cobertura  de nubes ${datos.current.cloudcover}`
+               velViento.innerHTML=`Velocidad del viento ${datos.current.wind_speed}`
+                
+            } catch(error) {
+                console.error("error", error);
+                estado.innerHTML = "Error de conexión";
+            }
+        }
+
+        estadoSelect.addEventListener("change", call);
+    </script>
+</body>
+</html>
