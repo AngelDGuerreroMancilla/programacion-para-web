@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body style="background-color: rgb(228, 232, 235);">
+    <h2>Base de datos de vehículos</h2>
+    <button id="btnList">Listar</button>
+    <button id="btnBusc">Buscar</button>
+    <button id="btnElim">Eliminar</button>
+    <input type="text"  id="inpBusc" placeholder="busqueda o eliminacion por placa" >
+
+
+    <h3>placa (sin guiones):</h3>
+    <input id="inpPlaca" type="text" maxlength="7">
+    
+    <h3>marca</h3>
+    <input id="inpMarca" type="text">
+
+    <h3>modelo</h3>
+    <input id="inpMod" type="text">
+
+    <button id="btnAgreg">Agregar</button>
+
+    <ul id="lista">
+
+    </ul>
+    <script>
+        const btnAgreg = document.getElementById("btnAgreg")
+        const btnElim = document.getElementById("btnElim")
+        const btnBusc = document.getElementById("btnBusc")
+        const btnList = document.getElementById("btnList")
+        const lista = document.getElementById("lista")
+
+        btnList.addEventListener("click", async ()=>{
+            
+            
+            try{
+                lista.innerHTML = "";
+                const response =await fetch(`http://localhost:3000/vehiculos`)
+                if (!response.ok) {
+                    throw new Error(`Error en el servidor: ${response.status}`);
+                }   
+                const carro = await response.json();
+                if (!carro.length){
+                    lista.innerHTML=`
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            lista vacia
+                        </div>
+                    </div> 
+                    `
+                }
+                
+                
+                carro.forEach(item => {
+                    const li= document.createElement("li")
+                    li.innerHTML= `
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-header">
+                                Placa: ${item.placa}
+                            </div>
+                            <ul class="list-group list-group-flush">
+
+                                <li class="list-group-item">Marca: ${item.marca}</li>
+                                <li class="list-group-item">Modelo: ${item.modelo}</li>
+                            </ul>
+                        </div>
+                    `
+                    lista.appendChild(li);  
+                });
+                
+                
+            }catch(error){
+                console.log("error en la peticion: ", error)
+            }
+        })
+
+        btnBusc.addEventListener("click", async () =>{
+            inpBusc = document.getElementById("inpBusc").value;
+            if(inpBusc){
+                try{
+                    
+                    const res = await fetch(`http://localhost:3000/vehiculos/${inpBusc}`)
+                    const datos = await res.json();
+                    if (!res.ok){
+                        lista.innerHTML=`
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            Placas ${inpBusc} sin coincidencias
+                        </div>
+                    </div> 
+                    `
+                        throw new Error("No encontrado");
+                    } 
+                        
+                    lista.innerHTML=`
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-header">
+                                Placa: ${datos.placa}
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Marca: ${datos.marca}</li>
+                                <li class="list-group-item">Modelo: ${datos.modelo}</li>
+                            </ul>
+                        </div>
+                    `
+                    
+                    
+                }catch(error){
+                    console.log("error en la peticion: ",error)
+                }
+            }else{
+                console.log("ingrese placas")
+                lista.innerHTML=`
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            Ingrese placas
+                        </div>
+                    </div> 
+                    `
+            }
+            
+        })
+
+
+        btnElim.addEventListener("click",async ()=>{
+            const inpBusc = document.getElementById("inpBusc").value;
+            if(inpBusc){
+                try{
+                    const res =await fetch (`http://localhost:3000/vehiculos/${inpBusc}`,{
+                        method:"DELETE"      
+                    })
+                    if (res.ok){ 
+                        console.log(`vehiculo con placas ${inpBusc} eliminado` ) 
+                        document.getElementById("inpBusc").value = "";
+                        document.getElementById("lista").innerHTML= ""
+                    }
+                    else{
+                        console.log("no se pudo eliminar")
+                    }      
+                }catch(error){
+                    console.error('Error en la petición:', error)
+                }
+            }else{
+                console.log("ingrese placas")
+                lista.innerHTML=`
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            Ingrese placas
+                        </div>
+                    </div> 
+                    `
+            }
+        })
+
+
+        btnAgreg.addEventListener("click",async () =>{
+            const placa = document.getElementById("inpPlaca").value
+            const marca = document.getElementById("inpMarca").value
+            const modelo = document.getElementById("inpMod").value
+            
+
+            if(placa && marca&& modelo){
+                const res=await fetch("http://localhost:3000/vehiculos",{
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ placa, marca, modelo })
+                })
+                if(!res.ok) throw new Error("no se puede agregar")
+
+            
+                 lista.innerHTML=`
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            Agregado vehiculo con placas ${placa}
+                        </div>
+                    </div> 
+                    `
+                document.getElementById("inpPlaca").value = "";
+                document.getElementById("inpMarca").value = "";
+                document.getElementById("inpMod").value = "";
+            
+
+                
+            }
+            else{
+                lista.innerHTML=`
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            Complete todos los campos
+                        </div>
+                    </div> 
+                    `
+            }
+        })
+
+
+    </script>
+
+
+
+</body>
+</html>
