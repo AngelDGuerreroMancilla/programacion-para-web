@@ -40,7 +40,7 @@
             
             try{
                 lista.innerHTML = "";
-                const response =await fetch(`http://localhost:3000/vehiculos`)
+                const response =await fetch(`/vehiculos`)
                 if (!response.ok) {
                     throw new Error(`Error en el servidor: ${response.status}`);
                 }   
@@ -84,7 +84,7 @@
             if(inpBusc){
                 try{
                     
-                    const res = await fetch(`http://localhost:3000/vehiculos/${inpBusc}`)
+                    const res = await fetch(`/vehiculos/${inpBusc}`)
                     const datos = await res.json();
                     if (!res.ok){
                         lista.innerHTML=`
@@ -131,7 +131,7 @@
             const inpBusc = document.getElementById("inpBusc").value;
             if(inpBusc){
                 try{
-                    const res =await fetch (`http://localhost:3000/vehiculos/${inpBusc}`,{
+                    const res =await fetch (`/vehiculos/${inpBusc}`,{
                         method:"DELETE"      
                     })
                     if (res.ok){ 
@@ -165,7 +165,7 @@
             
 
             if(placa && marca&& modelo){
-                const res=await fetch("http://localhost:3000/vehiculos",{
+                const res=await fetch("/vehiculos",{
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ placa, marca, modelo })
