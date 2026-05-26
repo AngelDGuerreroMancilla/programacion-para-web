@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/inicioSesion.css">
+    <link rel="stylesheet" href="css/carrito.css">
+    <link rel="stylesheet" href="css/productos.css">
+</head>
+<body>
+    <header>
+      <!-- barra de navegacion -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="/assets/logos/logo.avif" alt="logo" width="40" height="40"> 
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#" id="nav-inicio">Inicio</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#" id="nav-cuenta">Mi cuenta</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Categorias
+                  </a>
+      
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#" id="cat-abarrotes">Abarrotes</a></li>
+                    <li><a class="dropdown-item" href="#" id="cat-bebidas">Bebidas</a></li>
+                    <li><a class="dropdown-item" href="#" id="cat-dulceria">Dulceria</a></li>
+                    <li><a class="dropdown-item" href="#" id="cat-higiene">Higiene personal</a></li>
+                    <li><a class="dropdown-item" href="#" id="cat-limpieza">Limpieza</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" id="cat-otras">Otras categorías</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="#" id="nav-carrito">Mi carrito</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger fw-bold" href="#" id="nav-logout">Cerrar sesión</a>
+                </li>            
+
+              </ul>
+
+                <form class="d-flex" role="search" id="form-busqueda">
+                  <input class="form-control me-2" type="search" id="input-busqueda" placeholder="Buscar articulo" aria-label="Search"/>
+                  <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+
+            
+            </div>
+          </div>
+        </nav>
+    </header>
+
+    <!-- INICIO DE SESION -->
+    <section id="sect-login" class="sect-auth" style="display: none;">
+      
+      <form id="form-login" class="form-auth">
+        <h2>Iniciar sesión</h2>
+
+        <div class="mb-3">
+          <label for="login-email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="login-email" aria-describedby="emailHelp">
+        </div>
+
+        <div class="mb-3">
+          <label for="login-password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="login-password" aria-describedby="passwordHelp">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        <a href="#" class="btn btn-link">¿No tienes cuenta? Registrate</a>
+     
+      </form>      
+    </section>
+
+    <!-- REGISTRO -->
+    <section id="sect-register"class="sect-auth" style="display: none;">
+      
+      <form id="form-register" class="form-auth">
+        <h2>Registrarse</h2>
+
+        <div class="mb-3">
+          <label for="register-email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="register-email" aria-describedby="emailHelp">
+        </div>
+
+        <div class="mb-3">
+          <label for="register-password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="register-password" aria-describedby="passwordHelp">
+        </div>
+
+        <div class="mb-3">
+          <label for="register-confirm-password" class="form-label">Confirmar contraseña</label>
+          <input type="password" class="form-control" id="register-confirm-password" aria-describedby="passwordHelp">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+        <a href="#" class="btn btn-link">¿Ya tienes cuenta? Inicia sesión</a>
+     
+      </form>      
+    </section>
+
+    <!-- productos -->
+    <div class="tienda" style="display: none;">
+
+      <div class="productos" id="abarrotes">
+
+        <!-- <div class="card" style="width: 16rem;">
+          <img src="/assets/productos/MANZNA-ROJA.jpg" class="card-img-top" alt="..." style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">Manzana Roja</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">$20</li>
+              <li class="list-group-item">juanitosProd</li>
+            </ul>
+          </div>
+        </div> -->      
+
+      </div> <div class="productos" id="bebidas"></div>
+      <div class="productos" id="dulceria"></div>
+      <div class="productos" id="higiene"></div>
+      <div class="productos" id="limpieza"></div>
+      <div class="productos" id="otras"></div>
+
+    </div> 
+
+
+    <!-- CARRITO DE COMPRAS -->
+    <div class="carrito" style="display: none;">
+      
+        
+
+   <!--      <ol class="list-group list-group-numbered">
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Subheading</div>
+              Content for list item
+            </div>
+            <span class="badge text-bg-primary rounded-pill">14</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Subheading</div>
+              Content for list item
+            </div>
+            <span class="badge text-bg-primary rounded-pill">14</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Subheading</div>
+              Content for list item
+            </div>
+            <span class="badge text-bg-primary rounded-pill">14</span>
+          </li>
+        </ol>    --> 
+       
+    </div>
+
+    <div id="vista-pedidos" style="display: none; padding: 20px;">
+      <h2>Mis Pedidos Anteriores</h2>
+      <div id="contenedor-lista-pedidos" class="mt-4">
+      </div>
+    </div>    
+
+    <script src="js/interfaz.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/productos.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
