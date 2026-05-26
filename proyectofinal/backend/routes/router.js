@@ -10,15 +10,6 @@ const router = express.Router();
 
 
 
-
-
-//rutas sin token registro y login
-
-
-
-
-
-
 // registrarse
 router.post('/sign-up', async (req, res) => {
   try {
@@ -30,7 +21,7 @@ router.post('/sign-up', async (req, res) => {
       return res.status(409).json({ mensaje: 'Este correo ya está registrado.' });
     }
 
-    // Encriptar la contraseña, 10 es texto aleatorio para hacer el hash más seguro
+    // Encriptar la contraseña, 10 es texto aleatorio para hacer el hash  seguro
     const encrip = await bcrypt.hash(password, 10);
 
     // Guardar en la base de datos 
@@ -82,14 +73,6 @@ router.post('/login', async (req, res) => {
 
 
 
-
-
-// rutas con tokens, pasa por el middleware
-
-
-
-
-
 // recuperarar los productos
 router.get('/productos', userMiddleware.isLoggedIn, async (req, res) => {
   try {
@@ -115,36 +98,52 @@ router.get('/productos/buscar', userMiddleware.isLoggedIn, async (req, res) => {
 router.get('/mis-pedidos', userMiddleware.isLoggedIn, async (req, res) => {
   try {
     const idUsuario = req.userData.id;
-    const [pedidos] = await db.query('SELECT * FROM pedidos WHERE usuario_id = ?', [idUsuario]);
+    
+    const [pedidos] = await db.query('SELECT id, total, fecha_pedido FROM pedidos WHERE usuario_id = ? ORDER BY fecha_pedido DESC', [idUsuario]);
+
+    for (let pedido of pedidos) {
+        const [detalles] = await db.query(`
+            SELECT pd.cantidad, pd.precio_unitario, p.nombre 
+            FROM pedido_detalles pd 
+            JOIN productos p ON pd.producto_id = p.id 
+            WHERE pd.pedido_id = ?
+        `, [pedido.id]);
+        
+        pedido.carrito = detalles; 
+    }
+
     res.status(200).json(pedidos);
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al obtener pedidos', error: error.message });
   }
 });
 
-// crear pedido en el carrito
+// crear pedido en el carrito (
 router.post('/pedidos', userMiddleware.isLoggedIn, async (req, res) => {
   try {
     const idUsuario = req.userData.id;
     const { total, carrito } = req.body; 
 
-    const [resultado] = await db.query(
-      'INSERT INTO pedidos (usuario_id, total, carrito) VALUES (?, ?, ?)',
-      [idUsuario, total, JSON.stringify(carrito)]
+  
+    const [resultadoPedido] = await db.query(
+      'INSERT INTO pedidos (usuario_id, total) VALUES (?, ?)',
+      [idUsuario, total]
     );
+    
+    const pedidoId = resultadoPedido.insertId;
 
-    res.status(201).json({ mensaje: 'Pedido creado exitosamente', id_pedido: resultado.insertId });
+    for (const item of carrito) {
+        await db.query(
+            'INSERT INTO pedido_detalles (pedido_id, producto_id, cantidad, precio_unitario) VALUES (?, ?, ?, ?)',
+            [pedidoId, item.producto_id, item.cantidad, item.precio_unitario]
+        );
+    }
+
+    res.status(201).json({ mensaje: 'Pedido creado exitosamente', id_pedido: pedidoId });
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al crear el pedido', error: error.message });
   }
 });
-
-
-
-
-
-
-// admin
 
 
 

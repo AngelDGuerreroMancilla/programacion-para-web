@@ -1,6 +1,6 @@
 # Tienda en Línea - Proyecto Final
 
-Este proyecto es para un e-commerce. Cuenta con un frontend interactivo en HTML/CSS/JS y una API RESTful construida con Node.js y MySQL.
+Este proyecto es una Single Page Application (SPA) para un e-commerce. Cuenta con un frontend interactivo en HTML/CSS/JS y una API RESTful construida con Node.js y MySQL.
 
 ## Funcionalidades del Cliente (Interfaz Web)
 
@@ -13,19 +13,29 @@ Desde el frontend, los usuarios pueden realizar las siguientes acciones a travé
 - Realizar la compra (crear un pedido vinculado al usuario con uno o más productos).
 - Recuperar y visualizar su historial de pedidos anteriores.
 
-La API protege las rutas operativas. El frontend se encarga de enviar automáticamente el token de autorización (Bearer) en los encabezados de cada petición HTTP.*
+*Nota técnica: La API protege las rutas operativas. El frontend se encarga de enviar automáticamente el token de autorización (Bearer) en los encabezados de cada petición HTTP.*
 
-## Operaciones de Administrador (Comandos cURL)
+## Operaciones de Administrador (Comandos cURL desde la Terminal)
 
-El sistema cuenta con un usuario administrador configurado directamente en la base de datos. Para cumplir con los requerimientos, las acciones de administración no cuentan con interfaz gráfica y deben ejecutarse mediante peticiones cURL desde la terminal.
+El sistema cuenta con un usuario administrador configurado directamente en la base de datos. Las acciones de administración no cuentan con interfaz gráfica y deben ejecutarse mediante peticiones cURL desde la terminal.
 
-> **Importante:** Primero debes ejecutar el comando de loguearse para obtener el Token JWT. En los comandos posteriores, reemplaza `<TU_TOKEN>` con el código generado.
+> **Paso fundamental:** Primero debes ejecutar el comando de loguearse para que el servidor te devuelva un Token JWT. En los comandos posteriores (recuperar, agregar, modificar), debes copiar ese código largo y reemplazar `<TU_TOKEN>` con él.
 
-### 1. Loguearse como Administrador
+### 1. Loguearse como Administrador (Obtener Token)
+Este comando envía el correo y contraseña a la API. Si son correctos, la terminal te devolverá el Token que te identifica como administrador.
+en linux**
+sudo mysql -u root -p
+
+USE ecommerce_db;
+
+UPDATE usuarios SET rol = 'admin' WHERE email = 'prueba@gmail.com';
+
+exit;
+
 ```bash
 curl -X POST http://localhost:3000/api/login \
 -H "Content-Type: application/json" \
--d '{"email":"admin@admin.com", "password":"admin123"}'
+-d '{"email":"admin@mitienda.com", "password":"tu_contraseña"}'
 
 2. Recuperar todos los clientes
 
@@ -60,5 +70,5 @@ Bash
 
 curl -X PUT http://localhost:3000/api/admin/productos/1 \
 -H "Content-Type: application/json" \
--H "Authorization: Bearer <TU_TOKEN>" \
--d '{"nombre":"Producto Editado", "descripcion":"Se actualizó el producto correctamente", "precio": 25.00, "imagen": "[https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdzKP37zYogbr35uqD56WaWoqT6Lp4h_sCww&s](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdzKP37zYogbr35uqD56WaWoqT6Lp4h_sCww&s)"}'
+-H "Authorization: Bearer tuToken" \
+-d '{"nombre":"Producto Editado", "descripcion":"Se actualizó el producto correctamente", "precio": 25.00, "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdzKP37zYogbr35uqD56WaWoqT6Lp4h_sCww&s"}'
